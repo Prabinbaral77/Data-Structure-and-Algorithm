@@ -86,32 +86,20 @@ class BST {
 
   remove(data) {
     const removeNode = function (node, data) {
-      if (node === null) return null;
-      if (node.data === data) {
-        //if node has no children
-        if (node.left === null && node.right === null) {
-          return null;
-        }
-        //node has no left child
-        if (node.left === null) {
-          return node.right;
-        }
+      if (node == null) return null;
+      if (data == node.data) {
+        if (node.left == null && node.right == null) return null;
+        if (node.right == null) return node.left;
+        if (node.left == null) return node.right;
 
-        //node has no right child
-        if (node.right === null) {
-          return node.left;
-        }
-
-        //node has two children
         let tempNode = node.right;
         while (tempNode.left !== null) {
           tempNode = tempNode.left;
         }
-
         node.data = tempNode.data;
-        node.right = removeNode(node.right, node.data);
+        node.right = removeNode(node.right, tempNode.data);
         return node;
-      } else if (data < node.data) {
+      } else if (node.data < data) {
         node.left = removeNode(node.left, data);
         return node;
       } else {
@@ -123,15 +111,16 @@ class BST {
   }
 }
 
-const bst = new BST();
+let bst = new BST();
+
+bst.add(9);
 bst.add(4);
-bst.add(2);
-bst.add(6);
-bst.add(1);
+bst.add(17);
 bst.add(3);
-bst.add(5);
-bst.add(7);
-bst.remove(4);
+console.log(bst.findMax());
 console.log(bst.findMin());
-// console.log(bst.findMax());
-console.log(bst.isPresent(4));
+console.log(bst.isPresent(17));
+
+bst.remove(17);
+console.log(bst.findMax());
+console.log(bst.isPresent(17));
